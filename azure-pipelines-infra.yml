@@ -47,33 +47,29 @@ stages:
   dependsOn: DeployInfraDev
   condition: succeeded()
   jobs:
-  - deployment: DeployInfraProd
+  - job: DeployInfraProd
     displayName: 'Déployer Bicep Prod'
-    environment: 'production'   # approbation sur l’environnement
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureCLI@2
-            displayName: 'Déploiement Bicep Prod'
-            inputs:
-              azureSubscription: $(serviceConnection)
-              addSpnToEnvironment: true
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                az group create \
-                  --name $(rgProd) \
-                  --location $(location)
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Déploiement Bicep Prod'
+      inputs:
+        azureSubscription: $(serviceConnection)
+        addSpnToEnvironment: true
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az group create \
+            --name $(rgProd) \
+            --location $(location)
 
-                az deployment group create \
-                  --resource-group $(rgProd) \
-                  --template-file $(templateFile) \
-                  --parameters \
-                    NiveauPlan='Prod' \
-                    location='$(location)' \
-                    applicationTag='OneCommerce' \
-                    sqlAdminLogin='sqladmin' \
-                    sqlAdminPassword='$(sqlAdminPassword)'
-            env:
-              sqlAdminPassword: $(sqlAdminPassword)
+          az deployment group create \
+            --resource-group $(rgProd) \
+            --template-file $(templateFile) \
+            --parameters \
+              NiveauPlan='Prod' \
+              location='$(location)' \
+              applicationTag='OneCommerce' \
+              sqlAdminLogin='sqladmin' \
+              sqlAdminPassword='$(sqlAdminPassword)'
+      env:
+        sqlAdminPassword: $(sqlAdminPassword)
