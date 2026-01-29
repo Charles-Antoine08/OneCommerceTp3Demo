@@ -35,7 +35,7 @@ stages:
             --parameters \
               NiveauPlan='Dev' \
               location='$(location)' \
-              projectName='onecommerce' \
+              projectName='onecommerce-${uniqueString($(rgDev))}' \
               applicationTag='OneCommerce' \
               sqlAdminLogin='sqladmin' \
               sqlAdminPassword='$(sqlAdminPassword)'
@@ -71,7 +71,7 @@ stages:
                   --parameters \
                     NiveauPlan='Prod' \
                     location='$(location)' \
-                    projectName='onecommerce' \
+                    projectName='onecommerce-${uniqueString($(rgProd))}' \
                     applicationTag='OneCommerce' \
                     sqlAdminLogin='sqladmin' \
                     sqlAdminPassword='$(sqlAdminPassword)'
