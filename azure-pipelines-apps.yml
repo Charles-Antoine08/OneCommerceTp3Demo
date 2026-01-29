@@ -6,15 +6,17 @@ variables:
   serviceConnection: 'az-serviceprincipal'
 
   # Web Apps Dev (remplacer xxxx par le suffixe réel)
-  webApp_OneFichiers_Dev: 'webapp-OneFichiers-xxxx'
-  webApp_OneCommandes_Dev: 'webapp-OneCommandes-xxxx'
-  webApp_OneFidelite_Dev: 'webapp-OneFidelite-xxxx'
-  webApp_OneCommerceMVC_Dev: 'webapp-OneCommerceMVC-xxxx'
+  webApp_OneFichiers_Dev: 'webapp-OneFichiers-xxxx' # à remplacer par le vrai suffixe
+  webApp_OneCommandes_Dev: 'webapp-OneCommandes-xxxx' 
+  webApp_OneFidelite_Dev: 'webapp-OneFidelite-xxxx' 
+  webApp_OneProduit_Dev: 'webapp-OneProduit-xxxx'  
+  webApp_OneCommerceMVC_Dev: 'webapp-OneCommerceMVC-xxxx' 
 
   # Web Apps Prod (remplacer yyyy par le suffixe réel)
-  webApp_OneFichiers_Prod: 'webapp-OneFichiers-yyyy'
+  webApp_OneFichiers_Prod: 'webapp-OneFichiers-yyyy' # à remplacer par le vrai suffixe
   webApp_OneCommandes_Prod: 'webapp-OneCommandes-yyyy'
   webApp_OneFidelite_Prod: 'webapp-OneFidelite-yyyy'
+  webApp_OneProduit_Prod: 'webapp-OneProduit-yyyy'  
   webApp_OneCommerceMVC_Prod: 'webapp-OneCommerceMVC-yyyy'
 
 stages:
@@ -128,6 +130,27 @@ stages:
               WebAppName: '$(webApp_OneFidelite_Dev)'
               package: '$(System.ArtifactsDirectory)/**/*.zip'
 
+- deployment: Deploy_OneProduit_Dev
+  displayName: 'Déploiement API OneProduit Dev'
+  environment: 'dev'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: '$(serviceConnection)'
+            appType: 'webApp'
+            WebAppName: '$(webApp_OneProduit_Dev)'
+            package: '$(System.ArtifactsDirectory)/**/*.zip'
+
 # MVC Dev seulement si toutes les APIs Dev OK
 - stage: DeployMvcDev
   displayName: 'Déploiement MVC Dev'
@@ -223,6 +246,27 @@ stages:
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Prod)'
               package: '$(System.ArtifactsDirectory)/**/*.zip'
+
+- deployment: Deploy_OneProduit_Prod
+  displayName: 'Déploiement API OneProduit Prod'
+  environment: 'production'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: DownloadBuildArtifacts@0
+          inputs:
+            buildType: 'current'
+            downloadType: 'single'
+            artifactName: 'drop'
+            downloadPath: '$(System.ArtifactsDirectory)'
+        - task: AzureRmWebAppDeployment@4
+          inputs:
+            ConnectionType: 'AzureRM'
+            azureSubscription: '$(serviceConnection)'
+            appType: 'webApp'
+            WebAppName: '$(webApp_OneProduit_Prod)'
+            package: '$(System.ArtifactsDirectory)/**/*.zip'
 
 # MVC Prod seulement si APIs Prod OK + approbation Prod
 - stage: DeployMvcProd
