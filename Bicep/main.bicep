@@ -17,7 +17,7 @@ param location string = resourceGroup().location
 param sqlAdminPassword string
 
 @description('Nom du projet')
-param projectName string = 'onecommerce'
+param projectName string = 'onecommerce-${uniqueString(resourceGroup().id)}'
 
 @description('Tag Application')
 param applicationTag string = 'OneCommerce'

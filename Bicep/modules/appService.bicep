@@ -27,7 +27,7 @@ var skuName = NiveauPlan == 'Prod'
 var randomSuffix = substring(uniqueString(resourceGroup().id), 0, 4)
 
 @description('Nom du plan App Service')
-var appServicePlanName = 'sp-${planNameSuffix}'
+var appServicePlanName = 'sp-${planNameSuffix}-${randomSuffix}'
 
 
 @description('Plan App Service')
