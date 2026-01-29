@@ -22,6 +22,7 @@ stages:
       displayName: 'Déploiement Bicep Dev'
       inputs:
         azureSubscription: $(serviceConnection)
+        addSpnToEnvironment: true
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
@@ -57,6 +58,7 @@ stages:
             displayName: 'Déploiement Bicep Prod'
             inputs:
               azureSubscription: $(serviceConnection)
+              addSpnToEnvironment: true
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
