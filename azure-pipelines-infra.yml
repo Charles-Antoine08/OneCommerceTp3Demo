@@ -1,0 +1,79 @@
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  serviceConnection: 'az-serviceprincipal'
+  location: 'canadacentral'
+  rgDev: 'rg-onecommerce-dev'
+  rgProd: 'rg-onecommerce-prod'
+  templateFile: '**/main.bicep'
+
+stages:
+- stage: DeployInfraDev
+  displayName: 'Déploiement infra Dev'
+  jobs:
+  - job: DeployInfraDev
+    displayName: 'Déployer Bicep Dev'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Déploiement Bicep Dev'
+      inputs:
+        azureSubscription: $(serviceConnection)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az group create \
+            --name $(rgDev) \
+            --location $(location)
+
+          az deployment group create \
+            --resource-group $(rgDev) \
+            --template-file $(templateFile) \
+            --parameters \
+              NiveauPlan='Dev' \
+              location='$(location)' \
+              projectName='onecommerce' \
+              applicationTag='OneCommerce' \
+              sqlAdminLogin='sqladmin' \
+              sqlAdminPassword='$(sqlAdminPassword)'
+      env:
+        sqlAdminPassword: $(sqlAdminPassword)
+
+- stage: DeployInfraProd
+  displayName: 'Déploiement infra Prod'
+  dependsOn: DeployInfraDev
+  condition: succeeded()
+  jobs:
+  - deployment: DeployInfraProd
+    displayName: 'Déployer Bicep Prod'
+    environment: 'production'   # approbation sur l’environnement
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureCLI@2
+            displayName: 'Déploiement Bicep Prod'
+            inputs:
+              azureSubscription: $(serviceConnection)
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az group create \
+                  --name $(rgProd) \
+                  --location $(location)
+
+                az deployment group create \
+                  --resource-group $(rgProd) \
+                  --template-file $(templateFile) \
+                  --parameters \
+                    NiveauPlan='Prod' \
+                    location='$(location)' \
+                    projectName='onecommerce' \
+                    applicationTag='OneCommerce' \
+                    sqlAdminLogin='sqladmin' \
+                    sqlAdminPassword='$(sqlAdminPassword)'
+            env:
+              sqlAdminPassword: $(sqlAdminPassword)
