@@ -69,6 +69,8 @@ resource stagingSlots 'Microsoft.Web/sites/slots@2025-03-01' = [for (appName, i)
   }
 }]
 
+
+
 @description('Autoscale en production')
 resource autoScale 'Microsoft.Insights/autoscalesettings@2022-10-01' = if (NiveauPlan == 'Prod') {
   name: 'autoscale-${appServicePlanName}'
@@ -88,9 +90,12 @@ resource autoScale 'Microsoft.Insights/autoscalesettings@2022-10-01' = if (Nivea
           default: '1'
         }
         rules: [
+          
+          //  Scale OUT (augmenter)
           {
             metricTrigger: {
-              metricName: 'CpuPercentageIncrease'
+              metricName: 'CpuPercentage'
+              metricNamespace: 'microsoft.web/serverfarms'
               metricResourceUri: appServicePlan.id
               timeGrain: 'PT1M'
               statistic: 'Average'
@@ -106,9 +111,12 @@ resource autoScale 'Microsoft.Insights/autoscalesettings@2022-10-01' = if (Nivea
               cooldown: 'PT10M'
             }
           }
+
+          //  Scale IN (réduire)
           {
             metricTrigger: {
-              metricName: 'CpuPercentageDecrease'
+              metricName: 'CpuPercentage'
+              metricNamespace: 'microsoft.web/serverfarms'
               metricResourceUri: appServicePlan.id
               timeGrain: 'PT1M'
               statistic: 'Average'
