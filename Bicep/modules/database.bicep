@@ -78,6 +78,10 @@ resource sqlDatabases 'Microsoft.Sql/servers/databases@2014-04-01' = [for dbName
     requestedServiceObjectiveName: 'ElasticPool'
     elasticPoolName: sqlElasticPoolName
   }
+  dependsOn: [
+    sqlElasticPool
+  ]
+
 }]
 
 @description('Règle de pare-feu SQL')
