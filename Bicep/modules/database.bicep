@@ -2,7 +2,7 @@
 param location string
 
 @description('Nom du projet')
-param projectName string = 'onecommerce'
+param projectName string = 'onecommerce-${uniqueString(resourceGroup().id)}'
 
 @description('Login admin SQL')
 param sqlAdminLogin string = 'sqladmin'
