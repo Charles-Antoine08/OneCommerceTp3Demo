@@ -35,20 +35,20 @@ stages:
       displayName: 'Restaurer les packages'
       inputs:
         command: 'restore'
-        projects: '**/src/*.csproj'
+        projects: '**/src/**/*.csproj'
 
     - task: DotNetCoreCLI@2
       displayName: 'Génération de la solution'
       inputs:
         command: 'build'
-        projects: '**/src/*.csproj'
+        projects: '**/src/**/*.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
     - task: DotNetCoreCLI@2
       displayName: 'Exécution des tests unitaires'
       inputs:
         command: 'test'
-        projects: '**/tests/*Tests.csproj'
+        projects: '**/tests/**/*Tests.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
     # --- PUBLICATION PAR PROJET ---
@@ -56,35 +56,35 @@ stages:
       displayName: 'Publish OneFichiers'
       inputs:
         command: 'publish'
-        projects: '**/OneFichiers.API/*.csproj'
+        projects: '**/OneFichiers.API/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFichiers'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneCommandes'
       inputs:
         command: 'publish'
-        projects: '**/OneCommandes.API/*.csproj'
+        projects: '**/OneCommandes.API/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommandes'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneFidelite'
       inputs:
         command: 'publish'
-        projects: '**/OneFidelite.API/*.csproj'
+        projects: '**/OneFidelite.API/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFidelite'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneProduit'
       inputs:
         command: 'publish'
-        projects: '**/OneProduit.API/*.csproj'
+        projects: '**/OneProduit.API/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneProduit'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneCommerceMVC'
       inputs:
         command: 'publish'
-        projects: '**/OneCommerceMVC.API/*.csproj'
+        projects: '**/OneCommerceMVC.API/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommerceMVC'
 
     - task: PublishBuildArtifacts@1
