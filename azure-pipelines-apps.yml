@@ -84,7 +84,7 @@ stages:
       displayName: 'Publish OneCommerceMVC'
       inputs:
         command: 'publish'
-        projects: '**/OneCommerceMVC.API/**/*.csproj'
+        projects: '**/OneCommerce.MVC/**/*.csproj'
         arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommerceMVC'
 
     - task: PublishBuildArtifacts@1
@@ -209,7 +209,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*MVC.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*.zip'
 
 
 # DEPLOY APIs PROD
