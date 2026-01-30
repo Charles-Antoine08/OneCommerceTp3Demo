@@ -21,7 +21,6 @@ variables:
 
 stages:
 
-
 # BUILD
 
 - stage: Build
@@ -31,6 +30,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+
     - task: DotNetCoreCLI@2
       displayName: 'Restaurer les packages'
       inputs:
@@ -51,12 +51,41 @@ stages:
         projects: '**/*Tests.csproj'
         arguments: '--configuration $(buildConfiguration)'
 
+    # --- PUBLICATION PAR PROJET ---
     - task: DotNetCoreCLI@2
-      displayName: 'Publication des projets'
+      displayName: 'Publish OneFichiers'
       inputs:
         command: 'publish'
-        publishWebProjects: true
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        projects: '**/OneFichiers/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFichiers'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish OneCommandes'
+      inputs:
+        command: 'publish'
+        projects: '**/OneCommandes/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommandes'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish OneFidelite'
+      inputs:
+        command: 'publish'
+        projects: '**/OneFidelite/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFidelite'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish OneProduit'
+      inputs:
+        command: 'publish'
+        projects: '**/OneProduit/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneProduit'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish OneCommerceMVC'
+      inputs:
+        command: 'publish'
+        projects: '**/OneCommerceMVC/*.csproj'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommerceMVC'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publication de l’artefact'
@@ -66,7 +95,7 @@ stages:
         publishLocation: 'Container'
 
 
-# DEPLOY APIs DEV (PARALLÈLE)
+# DEPLOY APIs DEV
 
 - stage: DeployApisDev
   displayName: 'Déploiement APIs Dev'
@@ -75,7 +104,6 @@ stages:
   jobs:
 
   - deployment: Deploy_OneFichiers_Dev
-    displayName: 'Déploiement API OneFichiers Dev'
     environment: 'dev'
     strategy:
       runOnce:
@@ -93,10 +121,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFichiers.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/**/*.zip'
 
   - deployment: Deploy_OneCommandes_Dev
-    displayName: 'Déploiement API OneCommandes Dev'
     environment: 'dev'
     strategy:
       runOnce:
@@ -114,10 +141,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommandes.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/**/*.zip'
 
   - deployment: Deploy_OneFidelite_Dev
-    displayName: 'Déploiement API OneFidelite Dev'
     environment: 'dev'
     strategy:
       runOnce:
@@ -135,10 +161,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFidelite.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/**/*.zip'
 
   - deployment: Deploy_OneProduit_Dev
-    displayName: 'Déploiement API OneProduit Dev'
     environment: 'dev'
     strategy:
       runOnce:
@@ -156,10 +181,10 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneProduit.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit/**/*.zip'
 
 
-# DEPLOY MVC DEV (SEULEMENT SI APIs OK)
+# DEPLOY MVC DEV
 
 - stage: DeployMvcDev
   displayName: 'Déploiement MVC Dev'
@@ -167,7 +192,6 @@ stages:
   condition: succeeded()
   jobs:
   - deployment: Deploy_MVC_Dev
-    displayName: 'Déploiement OneCommerceMVC Dev'
     environment: 'dev'
     strategy:
       runOnce:
@@ -185,10 +209,10 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*.zip'
 
 
-# DEPLOY APIs PROD (APPROBATION)
+# DEPLOY APIs PROD
 
 - stage: DeployApisProd
   displayName: 'Déploiement APIs Prod'
@@ -197,7 +221,6 @@ stages:
   jobs:
 
   - deployment: Deploy_OneFichiers_Prod
-    displayName: 'Déploiement API OneFichiers Prod'
     environment: 'production'
     strategy:
       runOnce:
@@ -215,10 +238,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFichiers.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/**/*.zip'
 
   - deployment: Deploy_OneCommandes_Prod
-    displayName: 'Déploiement API OneCommandes Prod'
     environment: 'production'
     strategy:
       runOnce:
@@ -236,10 +258,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommandes.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/**/*.zip'
 
   - deployment: Deploy_OneFidelite_Prod
-    displayName: 'Déploiement API OneFidelite Prod'
     environment: 'production'
     strategy:
       runOnce:
@@ -257,10 +278,9 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFidelite.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/**/*.zip'
 
   - deployment: Deploy_OneProduit_Prod
-    displayName: 'Déploiement API OneProduit Prod'
     environment: 'production'
     strategy:
       runOnce:
@@ -278,10 +298,10 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneProduit.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit/**/*.zip'
 
 
-# DEPLOY MVC PROD (SEULEMENT SI APIs PROD OK)
+# DEPLOY MVC PROD
 
 - stage: DeployMvcProd
   displayName: 'Déploiement MVC Prod'
@@ -289,7 +309,6 @@ stages:
   condition: succeeded()
   jobs:
   - deployment: Deploy_MVC_Prod
-    displayName: 'Déploiement OneCommerceMVC Prod'
     environment: 'production'
     strategy:
       runOnce:
@@ -307,4 +326,4 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*.zip'
