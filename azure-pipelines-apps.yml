@@ -93,7 +93,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Dev)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers.zip'
 
   - deployment: Deploy_OneCommandes_Dev
     displayName: 'Déploiement API OneCommandes Dev'
@@ -114,7 +114,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Dev)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes.zip'
 
   - deployment: Deploy_OneFidelite_Dev
     displayName: 'Déploiement API OneFidelite Dev'
@@ -135,7 +135,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Dev)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite.zip'
 
   - deployment: Deploy_OneProduit_Dev
     displayName: 'Déploiement API OneProduit Dev'
@@ -156,7 +156,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Dev)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit.zip'
 
 
 # DEPLOY MVC DEV (SEULEMENT SI APIs OK)
@@ -185,7 +185,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Dev)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC.zip'
 
 
 # DEPLOY APIs PROD (APPROBATION)
@@ -215,7 +215,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Prod)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers.zip'
 
   - deployment: Deploy_OneCommandes_Prod
     displayName: 'Déploiement API OneCommandes Prod'
@@ -236,7 +236,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Prod)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes.zip'
 
   - deployment: Deploy_OneFidelite_Prod
     displayName: 'Déploiement API OneFidelite Prod'
@@ -257,7 +257,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Prod)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite.zip'
 
   - deployment: Deploy_OneProduit_Prod
     displayName: 'Déploiement API OneProduit Prod'
@@ -278,7 +278,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Prod)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit.zip'
 
 
 # DEPLOY MVC PROD (SEULEMENT SI APIs PROD OK)
@@ -307,4 +307,4 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Prod)'
-              package: '$(System.ArtifactsDirectory)/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC.zip'
