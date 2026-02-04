@@ -1,0 +1,33 @@
+# build results
+**/bin/
+**/obj/
+
+# visual studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# ASP.NET
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+
+# Cache / temp
+*.cache
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Aspire
+Aspire/
+
