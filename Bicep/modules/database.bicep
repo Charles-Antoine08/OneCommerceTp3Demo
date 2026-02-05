@@ -11,7 +11,7 @@ param sqlAdminLogin string = 'sqladmin'
 @secure()
 @minLength(10)
 @maxLength(20)
-param sqlAdminPassword string = 'SqlAdmin!2026'
+param sqlAdminPassword string
 
 @description('Tag Application SQL')
 param applicationTag string
