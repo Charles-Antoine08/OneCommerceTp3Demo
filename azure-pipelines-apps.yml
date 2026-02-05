@@ -326,4 +326,4 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*MVC.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/*.zip'
