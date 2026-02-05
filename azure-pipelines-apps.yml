@@ -121,7 +121,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/*API.zip'
 
   - deployment: Deploy_OneCommandes_Dev
     environment: 'dev'
@@ -141,7 +141,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/*API.zip'
 
   - deployment: Deploy_OneFidelite_Dev
     environment: 'dev'
@@ -161,7 +161,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/*API.zip'
 
   - deployment: Deploy_OneProduit_Dev
     environment: 'dev'
@@ -181,7 +181,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneProduit/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit/*API.zip'
 
 
 # DEPLOY MVC DEV
@@ -209,7 +209,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Dev)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/**/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/*MVC.zip'
 
 
 # DEPLOY APIs PROD
@@ -238,7 +238,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFichiers_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFichiers/*API.zip'
 
   - deployment: Deploy_OneCommandes_Prod
     environment: 'production'
@@ -258,7 +258,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommandes_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommandes/*API.zip'
 
   - deployment: Deploy_OneFidelite_Prod
     environment: 'production'
@@ -278,7 +278,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneFidelite_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneFidelite/*API.zip'
 
   - deployment: Deploy_OneProduit_Prod
     environment: 'production'
@@ -298,7 +298,7 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneProduit_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneProduit/**/*API.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneProduit/*API.zip'
 
 
 # DEPLOY MVC PROD
@@ -326,4 +326,4 @@ stages:
               azureSubscription: '$(serviceConnection)'
               appType: 'webApp'
               WebAppName: '$(webApp_OneCommerceMVC_Prod)'
-              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/*.zip'
+              package: '$(System.ArtifactsDirectory)/drop/OneCommerceMVC/*MVC.zip'
