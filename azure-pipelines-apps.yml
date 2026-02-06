@@ -57,35 +57,35 @@ stages:
       inputs:
         command: 'publish'
         projects: '**/OneFichiers.API/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish/OneFichiers'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFichiers'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneCommandes'
       inputs:
         command: 'publish'
         projects: '**/OneCommandes.API/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish/OneCommandes'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommandes'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneFidelite'
       inputs:
         command: 'publish'
         projects: '**/OneFidelite.API/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish/OneFidelite'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneFidelite'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneProduit'
       inputs:
         command: 'publish'
         projects: '**/OneProduit.API/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish/OneProduit'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneProduit'
 
     - task: DotNetCoreCLI@2
       displayName: 'Publish OneCommerceMVC'
       inputs:
         command: 'publish'
         projects: '**/OneCommerce.MVC/*.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish/OneCommerceMVC'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/OneCommerceMVC'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publication de l’artefact'
